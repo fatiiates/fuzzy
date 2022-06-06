@@ -1,0 +1,3 @@
+	RULE 1 : IF IyRate IS low AND PFRate IS low AND eRate IS low AND dIfRate IS low THEN IfRate IS low;
+	RULE 2 : IF IyRate IS medium AND PFRate IS medium AND eRate IS medium AND dIfRate IS medium THEN IfRate IS medium;
+	RULE 3 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS high THEN IfRate IS high;

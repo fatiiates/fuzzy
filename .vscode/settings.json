@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "java/fuzzy/src"
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/tati/Desktop/jFuzzyLogic.jar"
+    ]
+}
