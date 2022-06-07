@@ -98,7 +98,7 @@ RULEBLOCK rules
 	RULE 47 : IF IyRate IS med AND PFRate IS high AND eRate IS low AND dIfRate IS med THEN IfRate IS med;
 	RULE 48 : IF IyRate IS med AND PFRate IS high AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 49 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 50 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
+	RULE 50 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS high;
 	RULE 51 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS high THEN IfRate IS low;
 	RULE 52 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
 	RULE 53 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS med THEN IfRate IS low;
