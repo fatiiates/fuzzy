@@ -24,9 +24,9 @@ FUZZIFY PFRate
 END_FUZZIFY
 
 FUZZIFY eRate
-    TERM low := (0,0) (0,1) (0.18,0);
+    TERM low := TRAPE -0.1 -0.1 0 0.18;
     TERM med  := (0,0) (0.18,1) (0.35,0);
-    TERM high := (0.18,0) (0.35,1) (0.35,0);
+    TERM high := TRAPE 0.18 0.35 0.5 0.5;
 END_FUZZIFY
 
 FUZZIFY dIfRate
@@ -40,20 +40,20 @@ DEFUZZIFY IfRate
     TERM low := TRAPE 0.6 0.6 1.22 1.53;
     TERM med := (1.22,0) (1.53,1) (1.95,0);
     TERM high := TRAPE 1.53 1.95 2.57 2.57;
-    METHOD : COG;    
-    DEFAULT := 1.525; 
+    METHOD : COG;   
+	DEFAULT := 20; 
 END_DEFUZZIFY
 
 RULEBLOCK rules
 	AND : MIN;	
 	OR : MAX;	
-    ACC: MIN;
+	ACCU : MAX;	
 
 	RULE 1 : IF IyRate IS low AND PFRate IS low AND eRate IS low AND dIfRate IS low THEN IfRate IS low;
 	RULE 2 : IF IyRate IS low AND PFRate IS low AND eRate IS low AND dIfRate IS med THEN IfRate IS low;
 	RULE 3 : IF IyRate IS low AND PFRate IS low AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 4 : IF IyRate IS low AND PFRate IS low AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 5 : IF IyRate IS low AND PFRate IS low AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
+	RULE 5 : IF IyRate IS low AND PFRate IS low AND eRate IS med AND dIfRate IS med THEN IfRate IS low;
 	RULE 6 : IF IyRate IS low AND PFRate IS low AND eRate IS med AND dIfRate IS high THEN IfRate IS low;
 	RULE 7 : IF IyRate IS low AND PFRate IS low AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
 	RULE 8 : IF IyRate IS low AND PFRate IS low AND eRate IS high AND dIfRate IS med THEN IfRate IS med;
@@ -68,7 +68,7 @@ RULEBLOCK rules
 	RULE 17 : IF IyRate IS low AND PFRate IS med AND eRate IS high AND dIfRate IS med THEN IfRate IS med;
 	RULE 18 : IF IyRate IS low AND PFRate IS med AND eRate IS high AND dIfRate IS high THEN IfRate IS low;
 	RULE 19 : IF IyRate IS low AND PFRate IS high AND eRate IS low AND dIfRate IS low THEN IfRate IS low;
-	RULE 20 : IF IyRate IS low AND PFRate IS high AND eRate IS low AND dIfRate IS med THEN IfRate IS low;
+	RULE 20 : IF IyRate IS low AND PFRate IS high AND eRate IS low AND dIfRate IS med THEN IfRate IS med;
 	RULE 21 : IF IyRate IS low AND PFRate IS high AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 22 : IF IyRate IS low AND PFRate IS high AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
 	RULE 23 : IF IyRate IS low AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS low;
@@ -89,7 +89,7 @@ RULEBLOCK rules
 	RULE 38 : IF IyRate IS med AND PFRate IS med AND eRate IS low AND dIfRate IS med THEN IfRate IS med;
 	RULE 39 : IF IyRate IS med AND PFRate IS med AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 40 : IF IyRate IS med AND PFRate IS med AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 41 : IF IyRate IS med AND PFRate IS med AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
+	RULE 41 : IF IyRate IS med OR PFRate IS med OR eRate IS med OR dIfRate IS med THEN IfRate IS med;
 	RULE 42 : IF IyRate IS med AND PFRate IS med AND eRate IS med AND dIfRate IS high THEN IfRate IS high;
 	RULE 43 : IF IyRate IS med AND PFRate IS med AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
 	RULE 44 : IF IyRate IS med AND PFRate IS med AND eRate IS high AND dIfRate IS med THEN IfRate IS low;
@@ -98,11 +98,11 @@ RULEBLOCK rules
 	RULE 47 : IF IyRate IS med AND PFRate IS high AND eRate IS low AND dIfRate IS med THEN IfRate IS med;
 	RULE 48 : IF IyRate IS med AND PFRate IS high AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 49 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 50 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS low;
+	RULE 50 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
 	RULE 51 : IF IyRate IS med AND PFRate IS high AND eRate IS med AND dIfRate IS high THEN IfRate IS low;
 	RULE 52 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
 	RULE 53 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS med THEN IfRate IS low;
-	RULE 54 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS high THEN IfRate IS low;
+	RULE 54 : IF IyRate IS med AND PFRate IS high AND eRate IS high AND dIfRate IS high THEN IfRate IS high;
     RULE 55 : IF IyRate IS high AND PFRate IS low AND eRate IS low AND dIfRate IS low THEN IfRate IS low;
 	RULE 56 : IF IyRate IS high AND PFRate IS low AND eRate IS low AND dIfRate IS med THEN IfRate IS low;
 	RULE 57 : IF IyRate IS high AND PFRate IS low AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
@@ -116,20 +116,20 @@ RULEBLOCK rules
 	RULE 65 : IF IyRate IS high AND PFRate IS med AND eRate IS low AND dIfRate IS med THEN IfRate IS low;
 	RULE 66 : IF IyRate IS high AND PFRate IS med AND eRate IS low AND dIfRate IS high THEN IfRate IS high;
 	RULE 67 : IF IyRate IS high AND PFRate IS med AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 68 : IF IyRate IS high AND PFRate IS med AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
+	RULE 68 : IF IyRate IS high AND PFRate IS med AND eRate IS med OR dIfRate IS med THEN IfRate IS med;
 	RULE 69 : IF IyRate IS high AND PFRate IS med AND eRate IS med AND dIfRate IS high THEN IfRate IS high;
 	RULE 70 : IF IyRate IS high AND PFRate IS med AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
-	RULE 71 : IF IyRate IS high AND PFRate IS med AND eRate IS high AND dIfRate IS med THEN IfRate IS low;
-	RULE 72 : IF IyRate IS high AND PFRate IS med AND eRate IS high AND dIfRate IS high THEN IfRate IS high;
+	RULE 71 : IF IyRate IS high AND PFRate IS med AND eRate IS high AND dIfRate IS med THEN IfRate IS med;
+	RULE 72 : IF IyRate IS high OR PFRate IS med AND eRate IS high OR dIfRate IS high THEN IfRate IS high;
 	RULE 73 : IF IyRate IS high AND PFRate IS high AND eRate IS low AND dIfRate IS low THEN IfRate IS low;
 	RULE 74 : IF IyRate IS high AND PFRate IS high AND eRate IS low AND dIfRate IS med THEN IfRate IS med;
 	RULE 75 : IF IyRate IS high AND PFRate IS high AND eRate IS low AND dIfRate IS high THEN IfRate IS low;
 	RULE 76 : IF IyRate IS high AND PFRate IS high AND eRate IS med AND dIfRate IS low THEN IfRate IS low;
-	RULE 77 : IF IyRate IS high AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS low;
+	RULE 77 : IF IyRate IS high AND PFRate IS high AND eRate IS med AND dIfRate IS med THEN IfRate IS med;
 	RULE 78 : IF IyRate IS high AND PFRate IS high AND eRate IS med AND dIfRate IS high THEN IfRate IS low;
-	RULE 79 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS low THEN IfRate IS low;
-	RULE 80 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS med THEN IfRate IS low;
-	RULE 81 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS high THEN IfRate IS low;
+	RULE 79 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS low THEN IfRate IS med;
+	RULE 80 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS med THEN IfRate IS high;
+	RULE 81 : IF IyRate IS high AND PFRate IS high AND eRate IS high AND dIfRate IS high THEN IfRate IS high;
 
 END_RULEBLOCK
 

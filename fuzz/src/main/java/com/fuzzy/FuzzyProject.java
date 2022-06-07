@@ -15,7 +15,7 @@ public class FuzzyProject {
         this.PFRate = PFRate;
         this.eRate = eRate;
         this.dIfRate = dIfRate;
-        fis = FIS.load("/home/tati/github/fuzzy/java/fuzzy/src/FuzzyProjectModel.fcl", true);
+        fis = FIS.load("/home/tati/github/fuzzy/fuzz/src/main/java/com/fuzzy/FuzzyProjectModel.fcl", true);
         fis.setVariable("IyRate", IyRate);
         fis.setVariable("PFRate", PFRate);
         fis.setVariable("eRate", eRate);
