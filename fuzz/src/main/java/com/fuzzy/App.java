@@ -28,8 +28,6 @@ import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
  */
 public class App {
 
-    public static boolean chartsIsShowed = false;
-
     public static void main(String[] args) throws FileNotFoundException, IOException, CsvException, ParseException {
         try {
             CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
@@ -63,13 +61,8 @@ public class App {
                 Double[] cl = rd.get(i);
                 rd.set(i, new Double[] { cl[0], cl[1], cl[2], cl[3], cl[4], App.calculateFuzzyVal(cl) });
             }
-            Collections.sort(rd, new Comparator<Double[]>() {
-                public int compare(Double[] o1, Double[] o2) {
-                    Double pred = Math.abs(o1[4]-o1[5]);
-                    Double pred2 = Math.abs(o2[4]-o2[5]);
-                    return Double.compare(pred, pred2);
-                }
-            });
+            App.sortByPredict(rd);
+            App.showChart(rd.get(rd.size() - 1));
             Double mae = 0.0;
             Double rmse = 0.0;
             for (Double[] arr : rd) {
@@ -91,11 +84,6 @@ public class App {
 
     private static Double calculateFuzzyVal(Double[] arr) throws URISyntaxException {
         FuzzyProject fz = new FuzzyProject(arr[0], arr[1], arr[2], arr[3]);
-        if (!App.chartsIsShowed) {
-            JFuzzyChart.get().chart(fz.getModel());
-            App.chartsIsShowed = true;
-        }
-
         return fz.toDouble();
     }
 
@@ -106,6 +94,21 @@ public class App {
         System.out.print(", dIf => " + dIf);
         System.out.println(", Expected => " + If + ", gathered = " + guess);
 
+    }
+
+    private static void showChart(Double[] arr) throws URISyntaxException{
+        FuzzyProject fz = new FuzzyProject(arr[0], arr[1], arr[2], arr[3]);
+        JFuzzyChart.get().chart(fz.getModel());
+    }
+
+    private static void sortByPredict(List<Double[]> rd){
+        Collections.sort(rd, new Comparator<Double[]>() {
+            public int compare(Double[] o1, Double[] o2) {
+                Double pred = Math.abs(o1[4]-o1[5]);
+                Double pred2 = Math.abs(o2[4]-o2[5]);
+                return Double.compare(pred, pred2);
+            }
+        });
     }
 
 }
