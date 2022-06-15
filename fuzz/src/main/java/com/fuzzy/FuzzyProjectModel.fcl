@@ -41,7 +41,7 @@ DEFUZZIFY IfRate
     TERM med := (1.22,0) (1.53,1) (1.95,0);
     TERM high := TRAPE 1.53 1.95 2.57 2.57;
     METHOD : COG;   
-	DEFAULT := 20; 
+	DEFAULT := 1.525; 
 END_DEFUZZIFY
 
 RULEBLOCK rules

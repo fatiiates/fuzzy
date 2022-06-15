@@ -61,6 +61,7 @@ public class App {
                 Double[] cl = rd.get(i);
                 rd.set(i, new Double[] { cl[0], cl[1], cl[2], cl[3], cl[4], App.calculateFuzzyVal(cl) });
             }
+            // App.sortByIf(rd);
             App.sortByPredict(rd);
             App.showChart(rd.get(rd.size() - 1));
             Double mae = 0.0;
@@ -84,6 +85,7 @@ public class App {
 
     private static Double calculateFuzzyVal(Double[] arr) throws URISyntaxException {
         FuzzyProject fz = new FuzzyProject(arr[0], arr[1], arr[2], arr[3]);
+        
         return fz.toDouble();
     }
 
@@ -107,6 +109,14 @@ public class App {
                 Double pred = Math.abs(o1[4]-o1[5]);
                 Double pred2 = Math.abs(o2[4]-o2[5]);
                 return Double.compare(pred, pred2);
+            }
+        });
+    }
+
+    private static void sortByIf(List<Double[]> rd){
+        Collections.sort(rd, new Comparator<Double[]>() {
+            public int compare(Double[] o1, Double[] o2) {
+                return Double.compare(o1[4], o2[4]);
             }
         });
     }
